@@ -1,6 +1,6 @@
 #include "mygame.h"
 
-MyGame::MyGame()
+MyGame::MyGame(QObject *parent):QObject(parent)
 {
     srand(time(0));
     width=10;
@@ -48,7 +48,7 @@ void MyGame::setData(int a,int b,int c){
 void MyGame::generate(int i, int j){
 
     actUserField[i][j]=1;
-    int mass[16][2]=0;
+    int mass[16][2]={0};
     int x=0;
     if((i-3)>=0&&(j-3)>=0){
         for(int k=(i-3);k<=i;++k){
@@ -106,26 +106,62 @@ void MyGame::generate(int i, int j){
     }
 
     for(int k=0;k<width;++k){
-        for(int l=0;l<height;++l)
+        for(int l=0;l<height;++l){
             if(field[k][l]==0){
                 int y=0;
-                if(k>0&&k<(width-1)&&l>0&&l<(height-1)){
-                    for(int m=k-1;m<=k+1;++m){
-                        for(int n=l-1;l<=l+1;++l){
-                            if(field[m][n]==-1)++y;
-                        }
-                    }
+                if(k>0&&l>0){
+                    if(field[k-1][l-1]==-1)++y;
                 }
-                else if(k==0&&l>0&&l<(height-1)){
-                    for(int m=0;m<=(k+1),++m){
-                        for(int n=(l-1);n<=(l+1);++l){
-                            if(field[m][n]==-1)++y;
-                        }
-                    }
+                if(k>0){
+                    if(field[k-1][l]==-1)++y;
                 }
+                if(k>0&&l<(height-1)){
+                    if(field[k-1][l+1]==-1)++y;
+                }
+                if(l>0){
+                    if(field[k][l-1]==-1)++y;
+                }
+                if(l<(height-1)){
+                    if(field[k][l+1]==-1)++y;
+                }
+                if(k<(width-1)&&l>0){
+                    if(field[k+1][l-1]==-1)++y;
+                }
+                if(k<(width-1)){
+                    if(field[k+1][l]==-1)++y;
+                }
+                if(k<(width-1)&&l<(height-1)){
+                    if(field[k+1][l+1]==-1)++y;
+                }
+
+                field[k][l]=y;
+                y=0;
+
             }
+        }
+
     }
 
 
 
+}
+
+void MyGame::expand(int i,int j){
+
+}
+
+void MyGame::move(int i,int j,bool click){
+
+}
+
+QVector<QVector<int>> MyGame::getField(void){
+    return field;
+}
+
+QVector<QVector<int>> MyGame::getActUserField(void){
+    return actUserField;
+}
+
+bool MyGame::isWin(void){
+    return false;
 }
