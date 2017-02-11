@@ -142,11 +142,87 @@ void MyGame::generate(int i, int j){
 
     }
 
+    for(int k=0;k<16;++k){
+        expand(mass[k][0],mass[k][1]);
+    }
+
 
 
 }
 
 void MyGame::expand(int i,int j){
+
+    int mass[8][2]={0};
+    int nuls=-1;
+
+    if(i>0&&j>0){
+        if(field[i-1][j-1]==0&&actUserField[i-1][j-1]!=1){
+            mass[nuls+1][0]=i-1;
+            mass[nuls+1][1]=j-1;
+            ++nuls;
+        }
+        actUserField[i-1][j-1]=1;
+    }
+    if(i>0){
+        if(field[i-1][j]==0&&actUserField[i-1][j]!=1){
+            mass[nuls+1][0]=i-1;
+            mass[nuls+1][1]=j;
+            ++nuls;
+        }
+        actUserField[i-1][j]=1;
+    }
+    if(i>0&&j<(height-1)){
+        if(field[i-1][j+1]==0&&actUserField[i-1][j+1]!=1){
+            mass[nuls+1][0]=i-1;
+            mass[nuls+1][1]=j+1;
+            ++nuls;
+        }
+        actUserField[i-1][j+1]=1;
+    }
+    if(j>0){
+        if(field[i][j-1]==0&&actUserField[i][j-1]!=1){
+            mass[nuls+1][0]=i;
+            mass[nuls+1][1]=j-1;
+            ++nuls;
+        }
+        actUserField[i][j-1]=1;
+    }
+    if(j<(height-1)){
+        if(field[i][j+1]==0&&actUserField[i][j+1]!=1){
+            mass[nuls+1][0]=i;
+            mass[nuls+1][1]=j+1;
+            ++nuls;
+        }
+        actUserField[i][j+1]=1;
+    }
+    if(i<(width-1)&&j>0){
+        if(field[i+1][j-1]==0&&actUserField[i+1][j-1]!=1){
+            mass[nuls+1][0]=i+1;
+            mass[nuls+1][1]=j-1;
+            ++nuls;
+        }
+        actUserField[i+1][j-1]=1;
+    }
+    if(i<(width-1)){
+        if(field[i+1][j]==0&&actUserField[i+1][j]!=1){
+            mass[nuls+1][0]=i+1;
+            mass[nuls+1][1]=j;
+            ++nuls;
+        }
+        actUserField[i+1][j]=1;
+    }
+    if(i<(width-1)&&j<(height-1)){
+        if(field[i+1][j+1]==0&&actUserField[i+1][j+1]!=1){
+            mass[nuls+1][0]=i+1;
+            mass[nuls+1][1]=j+1;
+            ++nuls;
+        }
+        actUserField[i+1][j+1]=1;
+    }
+
+    for(int k=0;k<=nuls;++k){
+        expand(mass[k][0],mass[k][1]);
+    }
 
 }
 
