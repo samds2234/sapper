@@ -143,7 +143,7 @@ void MyGame::generate(int i, int j){
     }
 
     for(int k=0;k<16;++k){
-        expand(mass[k][0],mass[k][1]);
+        if(field[mass[k][0]][mass[k][1]]==0) expand(mass[k][0],mass[k][1]);
     }
 
 
@@ -227,6 +227,20 @@ void MyGame::expand(int i,int j){
 }
 
 void MyGame::move(int i,int j,bool click){
+    if(!click){
+    if(actUserField[i][j]==0)actUserField[i][j]=1;
+    if(field[i][j]==-1&&actUserField[i][j]!=2)emit gameOver(false);
+    else if(field[i][j]==0&&actUserField[i][j]!=2){
+        expand(i,j);
+        if(isWin()) emit gameOver(true);
+    }
+    else{
+        if(isWin()&&actUserField[i][j]!=2) emit gameOver(true);
+    }
+    }
+    else{
+        if(actUserField[i][j]!=1) actUserField[i][j]=2;
+    }
 
 }
 
@@ -239,5 +253,14 @@ QVector<QVector<int>> MyGame::getActUserField(void){
 }
 
 bool MyGame::isWin(void){
-    return false;
+    int cnt=0;
+    for(int i=0;i<width;++i){
+        for(int j=0;j<height;++j){
+            if(actUserField[i][j]==1)++cnt;
+        }
+    }
+    if(cnt==(width*height-numBomb)) return true;
+    else return false;
+
+
 }
