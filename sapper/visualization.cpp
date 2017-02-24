@@ -26,6 +26,8 @@ Visualization::Visualization()
 
     game.setData(width,height,numBomb);
 
+    QObject::connect(&game,SIGNAL(gameOver(bool)),this,SLOT(end(bool)));
+
     drawField();
 
 
@@ -110,7 +112,9 @@ void Visualization::drawField(void){
               else{
                      QString str;
                      str.setNum(field[i][j],10);
-                     this->addText(str);
+                     QGraphicsTextItem *item1=new QGraphicsTextItem(str);
+                     item1->setPos(i*sizeOfSquare,j*sizeOfSquare);
+                     this->addItem(item1);
                      this->addLine(i*sizeOfSquare,j*sizeOfSquare,(i)*sizeOfSquare,(j+1)*sizeOfSquare);
                      this->addLine(i*sizeOfSquare,j*sizeOfSquare,(i+1)*sizeOfSquare,(j)*sizeOfSquare);
                   }
@@ -125,7 +129,7 @@ void Visualization::mousePressEvent(QGraphicsSceneMouseEvent *event){
 
     if(start==false){
         if(event->button()==Qt::LeftButton){
-            start==true;
+            start=true;
             int i=(event->scenePos().x())/sizeOfSquare;
             int j=event->scenePos().y()/sizeOfSquare;
             game.generate(i,j);
@@ -159,13 +163,13 @@ void Visualization::mousePressEvent(QGraphicsSceneMouseEvent *event){
 
 }
 
-void Visualization::boom(void){
 
-    for(int i=0;i<width;++i){
-        for(int j=0;j<height;++j){
-            actUserField[i][j]=1;
-        }
+void Visualization::end(bool a){
+    if(a){
+        emit gameOver(true);
     }
-    drawField();
+    else{
+        emit gameOver(false);
+    }
 }
 

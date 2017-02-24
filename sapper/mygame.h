@@ -22,6 +22,7 @@ public:
     QVector<QVector<int>> getField(void);
     QVector<QVector<int>> getActUserField(void);
     bool isWin(void);
+    void boom();
 signals:
     void gameOver(bool);
 private:

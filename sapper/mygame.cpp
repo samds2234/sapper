@@ -229,17 +229,29 @@ void MyGame::expand(int i,int j){
 void MyGame::move(int i,int j,bool click){
     if(!click){
     if(actUserField[i][j]==0)actUserField[i][j]=1;
-    if(field[i][j]==-1&&actUserField[i][j]!=2)emit gameOver(false);
+    if(field[i][j]==-1&&actUserField[i][j]!=2){
+        emit gameOver(false);
+        boom();
+    }
     else if(field[i][j]==0&&actUserField[i][j]!=2){
         expand(i,j);
-        if(isWin()) emit gameOver(true);
+        if(isWin()){
+
+            emit gameOver(true);
+            boom();
+        }
     }
     else{
-        if(isWin()&&actUserField[i][j]!=2) emit gameOver(true);
+        if(isWin()&&actUserField[i][j]!=2){
+
+            emit gameOver(true);
+            boom();
+        }
     }
     }
     else{
-        if(actUserField[i][j]!=1) actUserField[i][j]=2;
+        if(actUserField[i][j]!=1&&actUserField[i][j]!=2) actUserField[i][j]=2;
+        else if(actUserField[i][j]==2) actUserField[i][j]=0;
     }
 
 }
@@ -263,4 +275,12 @@ bool MyGame::isWin(void){
     else return false;
 
 
+}
+
+void MyGame::boom(void){
+    for(int i=0;i<width;++i){
+        for(int j=0;j<height;++j){
+            actUserField[i][j]=1;
+        }
+    }
 }

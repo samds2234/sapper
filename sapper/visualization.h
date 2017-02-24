@@ -10,6 +10,7 @@
 #include <QColor>
 #include <QGraphicsSceneMouseEvent>
 #include <QPointF>
+#include <QGraphicsTextItem>
 
 class Visualization : public QGraphicsScene
 {
@@ -19,7 +20,8 @@ public:
     void setData(int,int,int);
     void drawField(void);
 public slots:
-    void boom(void);
+    void end(bool);
+
 signals:
     void gameOver(bool);
 protected:
