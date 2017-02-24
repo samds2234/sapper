@@ -16,6 +16,7 @@ class Statistic : public QDialog
 public:
     explicit Statistic(QWidget *parent = 0);
     ~Statistic();
+    void update1(void);
 public slots:
     void end(void);
 

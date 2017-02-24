@@ -13,6 +13,8 @@ MainWindow::MainWindow(QWidget *parent) :
     height=10;
     cnt=0;
 
+    viz.setData(width,height,numBomb);
+
     ui->lcdBomb->display(numBomb);
 
 
@@ -23,6 +25,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(&tun,SIGNAL(getData(int,int,int)),this,SLOT(setData(int,int,int)));
     QObject::connect(ui->actionSettings,SIGNAL(triggered(bool)),this,SLOT(disp()));
     QObject::connect(ui->actionStat,SIGNAL(triggered(bool)),this,SLOT(dispStat()));
+    QObject::connect(&viz,SIGNAL(changeBomb(int)),this,SLOT(chBH(int)));
 }
 
 MainWindow::~MainWindow()
@@ -35,6 +38,7 @@ void MainWindow::newGame(void){
     viz.setData(width,height,numBomb);
     cnt=0;
     ui->lcdTime->display(cnt);
+    ui->lcdBomb->display(numBomb);
 }
 
 void MainWindow::stat(void){
@@ -61,13 +65,20 @@ void MainWindow::timerHandler(void){
 void MainWindow::go(bool a){
 
     t.stop();
-    cnt=0;
+
 
     if(a){
        win.show();
+       writeFile(true);
 
     }
-    else lose.show();
+    else{
+
+        lose.show();
+        writeFile(false);
+    }
+
+     cnt=0;
 }
 
 void MainWindow::setData(int w, int h, int num){
@@ -87,5 +98,50 @@ void MainWindow::disp(void){
 void MainWindow::dispStat(void){
 
     statG.show();
+
+}
+
+void MainWindow::writeFile(bool winGame){
+
+    QFile file;
+    file.setFileName("stat.dat");
+    file.open(QIODevice::ReadWrite);
+    QString temp;
+    QString str;
+
+    int num1;
+    int num2;
+    int num3;
+
+    temp=file.readLine();
+    num1=temp.toInt();
+    temp=file.readLine();
+    num2=temp.toInt();
+    temp=file.readLine();
+    num3=temp.toInt();
+
+    if(cnt<num3&&winGame) num3=cnt;
+    num1++;
+    if(winGame)num2++;
+    temp.setNum(num1);
+    str+=temp+"\n";
+    temp.setNum(num2);
+    str+=temp+"\n";
+    temp.setNum(num3);
+    str+=temp;
+    file.reset();
+    file.close();
+    file.open(QIODevice::WriteOnly|QIODevice::Truncate);
+    QTextStream out(&file);
+    out.flush();
+    out<<str;
+    file.close();
+    statG.update1();
+
+}
+
+void MainWindow::chBH(int a){
+
+    ui->lcdBomb->display(a);
 
 }

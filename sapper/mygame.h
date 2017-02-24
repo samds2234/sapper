@@ -25,6 +25,7 @@ public:
     void boom();
 signals:
     void gameOver(bool);
+    void changeBomb(int);
 private:
     int width;
     int height;
@@ -32,6 +33,7 @@ private:
     int kol;
     QVector<QVector<int>> field;
     QVector<QVector<int>> actUserField;
+    int counting;
 
 };
 

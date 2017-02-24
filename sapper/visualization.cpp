@@ -27,6 +27,7 @@ Visualization::Visualization()
     game.setData(width,height,numBomb);
 
     QObject::connect(&game,SIGNAL(gameOver(bool)),this,SLOT(end(bool)));
+    QObject::connect(&game,SIGNAL(changeBomb(int)),this,SLOT(chBH(int)));
 
     drawField();
 
@@ -172,5 +173,9 @@ void Visualization::end(bool a){
     else{
         emit gameOver(false);
     }
+}
+
+void Visualization::chBH(int a){
+    emit changeBomb(a);
 }
 

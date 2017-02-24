@@ -21,10 +21,12 @@ public:
     void drawField(void);
 public slots:
     void end(bool);
+    void chBH(int);
 
 signals:
     void gameOver(bool);
     void begin(void);
+    void changeBomb(int);
 protected:
     virtual void mousePressEvent(QGraphicsSceneMouseEvent *);
 private:

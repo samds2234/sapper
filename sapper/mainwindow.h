@@ -11,6 +11,7 @@
 #include <QPalette>
 #include "turning.h"
 #include "statistic.h"
+#include <QTextStream>
 
 
 namespace Ui {
@@ -24,6 +25,7 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
+    void writeFile(bool);
 public slots:
     void stat(void);
     void settings(void);
@@ -34,6 +36,7 @@ public slots:
     void setData(int,int,int);
     void disp(void);
     void dispStat(void);
+    void chBH(int);
 
 private:
     Ui::MainWindow *ui;

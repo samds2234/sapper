@@ -6,6 +6,7 @@ MyGame::MyGame(QObject *parent):QObject(parent)
     width=10;
     height=10;
     numBomb=10;
+    counting=numBomb;
     kol=0;
     field.resize(width);
     actUserField.resize(width);
@@ -28,6 +29,7 @@ void MyGame::setData(int a,int b,int c){
     width=a;
     height=b;
     numBomb=c;
+    counting=numBomb;
     kol=0;
     field.resize(width);
     actUserField.resize(width);
@@ -250,8 +252,18 @@ void MyGame::move(int i,int j,bool click){
     }
     }
     else{
-        if(actUserField[i][j]!=1&&actUserField[i][j]!=2) actUserField[i][j]=2;
-        else if(actUserField[i][j]==2) actUserField[i][j]=0;
+        if(actUserField[i][j]!=1&&actUserField[i][j]!=2){
+
+            actUserField[i][j]=2;
+            counting--;
+            emit changeBomb(counting);
+        }
+        else if(actUserField[i][j]==2){
+
+            actUserField[i][j]=0;
+            counting++;
+            emit changeBomb(counting);
+        }
     }
 
 }
