@@ -130,6 +130,7 @@ void Visualization::mousePressEvent(QGraphicsSceneMouseEvent *event){
     if(start==false){
         if(event->button()==Qt::LeftButton){
             start=true;
+            emit begin();
             int i=(event->scenePos().x())/sizeOfSquare;
             int j=event->scenePos().y()/sizeOfSquare;
             game.generate(i,j);

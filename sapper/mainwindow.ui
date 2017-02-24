@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>532</width>
+    <height>417</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,9 +18,32 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>10</y>
-      <width>371</width>
-      <height>231</height>
+      <y>0</y>
+      <width>501</width>
+      <height>311</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLCDNumber" name="lcdBomb">
+    <property name="geometry">
+     <rect>
+      <x>350</x>
+      <y>320</y>
+      <width>64</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="autoFillBackground">
+     <bool>false</bool>
+    </property>
+   </widget>
+   <widget class="QLCDNumber" name="lcdTime">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>320</y>
+      <width>64</width>
+      <height>23</height>
      </rect>
     </property>
    </widget>
@@ -30,10 +53,19 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>400</width>
+     <width>532</width>
      <height>19</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menu">
+    <property name="title">
+     <string>Menu</string>
+    </property>
+    <addaction name="actionNewGame"/>
+    <addaction name="actionSettings"/>
+    <addaction name="actionStat"/>
+   </widget>
+   <addaction name="menu"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -44,6 +76,21 @@
    </attribute>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
+  <action name="actionNewGame">
+   <property name="text">
+    <string>Новая игра</string>
+   </property>
+  </action>
+  <action name="actionSettings">
+   <property name="text">
+    <string>Настройки</string>
+   </property>
+  </action>
+  <action name="actionStat">
+   <property name="text">
+    <string>Статистика</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>

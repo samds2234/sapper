@@ -24,6 +24,7 @@ public slots:
 
 signals:
     void gameOver(bool);
+    void begin(void);
 protected:
     virtual void mousePressEvent(QGraphicsSceneMouseEvent *);
 private:
